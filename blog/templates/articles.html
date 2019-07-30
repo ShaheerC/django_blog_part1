@@ -12,8 +12,11 @@
     {% for article in articles %}
         {% if article.draft == False %}
             <article>
-                <h2>{{ article.title }} by {{ article.author }}</h2>
-                <p>{{ article.body }}</p>
+                <a href="{% url 'article_details' id=article.pk %}">
+                    <h2>{{ article.title }}</h2>
+                </a>
+                <h4>by {{ article.author }}</h4>
+                <p>{{ article.body|linebreaksbr }}</p>
                 <p>Published: {{ article.published_date }}</p>
             </article>
         {% endif %}
