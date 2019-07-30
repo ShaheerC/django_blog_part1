@@ -4,22 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Django Blog Part I</title>
+    <title>Django Blog</title>
 </head>
 <body>
-    <h1>DJANGO BLOG PART I</h1>
-    <h3>Date Created: July 25, 2019</h3>
-        <ul>
-            <p>What is a client?</p>
-            <li>A device that is sending data requests to the web</li>
-            <p>What is a server?</p>
-            <li>The server stores data to send back to the client</li>
-            <p>What is an HTTP request?</p>
-            <li>A request from client to server utilizing the Hypertext Transfer Protocol</li>
-            <p>What is an HTTP response?</p>
-            <li>The response from the server to the clients request utilizing the Hypertext Transfer Protocol</li>
-            <p>What is Django and why do we use it?</p>
-            <li>Django is an open-source python web framework used for rapid development</li>
-        </ul>
+    <h1>DJANGO BLOG</h1>
+    <h3>Current Time: {{ time_now }}</h3>
+    {% for article in articles %}
+        {% if article.draft == False %}
+            <article>
+                <h2>{{ article.title }} by {{ article.author }}</h2>
+                <p>{{ article.body }}</p>
+                <p>Published: {{ article.published_date }}</p>
+            </article>
+        {% endif %}
+    {% endfor %}
 </body>
 </html>
