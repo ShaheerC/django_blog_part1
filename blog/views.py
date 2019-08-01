@@ -15,3 +15,12 @@ def article_show(request, id):
     article = Article.objects.get(pk=id)
     context = {'article': article}
     return render(request, 'article.html', context)
+
+def create_comment(request):
+    article_id = request.POST['article']
+    article = Article.objects.filter(id=article_id)[0]
+    name = request.POST['name']
+    comment = request.POST['comment']
+    new_comment = Comment(name=name, message=comment, article=article)
+    new_comment.save()
+    return HttpResponseRedirect(f'/articles/{article_id}')

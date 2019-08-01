@@ -14,5 +14,25 @@
         <p>{{ article.body|linebreaksbr }}</p>
         <p>Published: {{ article.published_date }}</p>
     </article>
+    <form action="{% url 'create_comment' %}" method="post">
+        {% csrf_token %}
+        
+        <input type="hidden" name="article" value="{{ article.pk }}">
+
+        <label for="name">name</label>
+        <input type="text" name="name" class="comment_form">
+        
+        <label for="message">message</label>
+        <textarea rows="10" cols="50" name="comment" value="leave comment please" class="comment_form"></textarea>
+
+        <input type="submit" name="submit" value="submit" class="comment_form">   
+    </form>  
+    <ul>
+        {% for comment in article.comments.all %}
+            <li> Name: {{ comment.name }}</li>
+            <li> Date: {{ comment.created_at }}</li>
+            <li> Message: {{ comment.message }} </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
