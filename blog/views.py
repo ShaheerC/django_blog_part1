@@ -13,12 +13,12 @@ def articles(request):
 
 def article_show(request, id):
     article = Article.objects.get(pk=id)
-    context = {'article': article}
+    context = {'article': article, 'time_now': datetime.now()}
     return render(request, 'article.html', context)
 
 def new_article(request):
     form = ArticleForm()
-    context = {"form": form, "message": "Create new article", "action": "/articles/create"}
+    context = {"form": form, "message": "Create new article", "action": "/articles/create", 'time_now': datetime.now()}
     return render(request, 'form.html', context)
 
 def create_article(request):

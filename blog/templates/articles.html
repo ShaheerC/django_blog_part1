@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Django Blog</title>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css.map">
-</head>
-<body>
-    <h1>DJANGO BLOG</h1>
-    <h3>Current Time: {{ time_now }}</h3>
+{% extends "base.html" %}
+{% block content %}
     {% for article in articles %}
         {% if article.draft == False %}
             <article>
@@ -22,5 +12,4 @@
             </article>
         {% endif %}
     {% endfor %}
-</body>
-</html>
+{% endblock %}
