@@ -12,13 +12,13 @@
         <h1><a href="/articles">DJANGO BLOG</h1></a>
         <h3>Current Time: {{ time_now }}</h3>
         <ul>
-            <li><h5><a href="/signup">Sign Up</h5></a></li>
-            <li>{% if request.user.is_authenticated %}
-                    <h5><a href="/logout">Logout</h5></a>
-                {% else %}
-                    <h5><a href="/login">Login</h5></a>
-                {% endif %}</li>
-            <li><h5><a href="/articles/new">Post New Article</h5></a></li>
+            {% if request.user.is_authenticated %}
+                <li><h5><a href="{% url 'logout' %}">Logout</h5></a></li>
+                <li><h5><a href="{% url 'new_article' %}">Post New Article</h5></a></li>
+            {% else %}
+                <li><h5><a href="{% url 'login' %}">Login</h5></a></li>
+                <li><h5><a href="{% url 'signup' %}">Sign Up</h5></a></li>
+            {% endif %}
     </header>
 
     <main>
