@@ -2,7 +2,8 @@
 {% block content %}
     <article>
         <h2>{{ article.title }}</h2>
-        <h4>by {{ article.author }}</h4>
+        <h4>By {{ article.author }}</h4>
+        <h4>Uploaded By {{ article.user.username }}</h4>
         <p>{{ article.body|linebreaksbr }}</p>
         <p>Published: {{ article.published_date }}</p>
     </article>

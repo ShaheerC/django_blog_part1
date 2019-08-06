@@ -22,7 +22,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('articles/', articles),
     path('articles/<int:id>', article_show, name='article_details'),
-    path('articles/new', new_article),
-    path('articles/create', create_article),
+    path('articles/new', new_article, name='new_article'),
+    path('articles/create', create_article, name='create_article'),
     path('comments/new', create_comment, name='create_comment'),
+    path('login/', login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
+    path('signup/', signup, name='signup'),
 ]

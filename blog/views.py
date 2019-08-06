@@ -1,6 +1,9 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
 from blog.models import *
+from blog.forms import *
 from datetime import datetime
 
 def root(request):
@@ -24,7 +27,9 @@ def new_article(request):
 def create_article(request):
     form = ArticleForm(request.POST)
     if form.is_valid():
-        form.save()
+        article = form.save(commit=False)
+        article.user = request.user
+        article.save()
         return HttpResponseRedirect("/articles")
     else:
         context = {"form": form}
@@ -38,3 +43,40 @@ def create_comment(request):
     new_comment = Comment(name=name, message=comment, article=article)
     new_comment.save()
     return HttpResponseRedirect(f'/articles/{article_id}')
+
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            pw = form.cleaned_data['password']
+            user = authenticate(username=username, password=pw)
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect('/articles')
+            else:
+                form.add_error('username', 'Login failed')
+    else:
+        form = LoginForm()
+    context = {'form': form}
+    return render(request, 'login.html', context)
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/articles')
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return HttpResponseRedirect('/articles')
+    else:
+        form = UserCreationForm()
+    html_response = render(request, 'signup.html', {'form': form})
+    return HttpResponse(html_response)
+

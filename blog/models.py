@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django.core.validators import URLValidator, MinLengthValidator, MaxLengthValidator
 from django.core.exceptions import ValidationError
@@ -10,13 +11,14 @@ class Article(models.Model):
     author = models.CharField(max_length=255)
     draft = models.BooleanField(default=False)
     published_date = models.DateTimeField(default=datetime.now, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='articles')
 
     def __str__(self):
         return (f"{self.title} by {self.author}")
 
-    def clean(self):
-         if self.draft and self.published_date < date.today():
-           raise ValidationError('If this is a draft, the publish date must be in the future.')
+    # def clean(self):
+    #      if self.draft and self.published_date < date.today():
+    #        raise ValidationError('If this is a draft, the publish date must be in the future.')
     #     if self.draft and self.published_date < date.today():
             # trigger model validation error
 
