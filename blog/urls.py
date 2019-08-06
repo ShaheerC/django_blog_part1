@@ -22,5 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('articles/', articles),
     path('articles/<int:id>', article_show, name='article_details'),
+    path('articles/new', new_article),
+    path('articles/create', create_article),
     path('comments/new', create_comment, name='create_comment'),
 ]

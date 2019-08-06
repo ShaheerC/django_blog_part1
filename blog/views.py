@@ -16,6 +16,20 @@ def article_show(request, id):
     context = {'article': article}
     return render(request, 'article.html', context)
 
+def new_article(request):
+    form = ArticleForm()
+    context = {"form": form, "message": "Create new article", "action": "/articles/create"}
+    return render(request, 'form.html', context)
+
+def create_article(request):
+    form = ArticleForm(request.POST)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect("/articles")
+    else:
+        context = {"form": form}
+        return render(request, 'form.html', context)
+
 def create_comment(request):
     article_id = request.POST['article']
     article = Article.objects.filter(id=article_id)[0]
